@@ -1,0 +1,13 @@
+hotelService:
+  host: "localhost:8091"
+  updateToken: "/hotels/login"
+  getAll: "/hotels/getall"
+  getAllByFilter: "/hotels/getallbyfilter"
+  getAllByOwnerLogin: "/hotels/{ownerLogin}/getall"
+  getById: "/hotels/{id}"
+  delete: "/hotels/{id}"
+  update: "/hotels/{id}"
+  password: "123"
+  login: "456"
+
+

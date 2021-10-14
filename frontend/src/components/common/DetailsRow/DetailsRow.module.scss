@@ -1,0 +1,30 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+$margin-left: 10px;
+$row-height: 24px;
+
+.row {
+  height: $row-height;
+
+  .label {
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .value {
+    margin-left: $margin-left;
+    color: hsl(0, 0%, 26%);
+  }
+
+  .skeletonWrapper {
+    display: flex;
+
+    @include children-margin-x($margin-left);
+
+    .skeleton {
+      height: $row-height;
+      border-radius: $border-radius;
+    }
+  }
+}

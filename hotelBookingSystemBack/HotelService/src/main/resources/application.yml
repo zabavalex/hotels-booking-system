@@ -1,0 +1,6 @@
+bookingServiceUrl:
+  host: "localhost:8092"
+  updateToken: "/booking/login"
+  getAllByFilter: "/booking/{hotelId}/getallbyfilter"
+  password: "123"
+  login: "456"

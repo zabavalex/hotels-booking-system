@@ -1,0 +1,17 @@
+.btnGroup {
+  display: flex;
+  margin-top: 35px;
+
+  > div {
+    flex: 1;
+  }
+
+  > div + div {
+    margin-left: 20px;
+  }
+
+  button {
+    width: 100%;
+    font-weight: 600;
+  }
+}

@@ -1,0 +1,97 @@
+@import '~@/styles/mixins';
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 30px;
+
+  .headerTitle {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  .headerBtn {
+    padding: 3px 20px;
+    color: hsl(0, 0%, 25%);
+    font-weight: 500;
+    font-size: 14px;
+    background-color: transparent;
+    border: 1px dashed;
+    border-radius: $border-radius;
+    transition: all 0.3s ease-in;
+
+    &.active,
+    &:hover {
+      color: hsl(0, 0%, 5%);
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+
+    .btnTitle {
+      margin-left: 8px;
+    }
+  }
+}
+
+.cards {
+  transition: opacity 0.3s linear;
+
+  &.cardsDisabled {
+    opacity: 0.4;
+    user-select: none;
+    pointer-events: none;
+  }
+}
+
+.close {
+  margin-top: 24px;
+}
+
+.marginTop {
+  margin-top: 15px;
+}
+
+.detailsCol {
+  @include children-margin-y(8px);
+}
+
+:global(.ant-modal-content) {
+  overflow: hidden;
+}
+
+:global(.ant-modal-header) {
+  position: relative;
+  z-index: 2;
+  transition: box-shadow 0.3s linear;
+}
+
+.headerShadow :global(.ant-modal-header) {
+  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.15);
+}
+
+.refundWrapper {
+  left: 50%;
+  transform: translate(-50%, -120%);
+
+  @include head-popup;
+
+  &.refundOpen {
+    transform: translate(-50%, -25px);
+  }
+}
+
+.reversalWrapper {
+  left: 50%;
+  transform: translate(-50%, -120%);
+
+  @include head-popup;
+
+  &.reversalOpen {
+    transform: translate(-50%, -25px);
+  }
+}

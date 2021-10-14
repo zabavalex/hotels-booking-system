@@ -1,0 +1,40 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+.logoContainer {
+  display: flex;
+  padding: 10px;
+  border-right: 1px solid hsl(0, 0%, 94%);
+
+  .logoTitle {
+    margin-left: 10px;
+    font-weight: 600;
+    font-size: 16px;
+  }
+}
+
+.sideFooter {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px 10px 10px;
+
+  .divider {
+    margin-bottom: 15px;
+    border: none;
+    border-top: 1px solid $grey-color;
+  }
+}
+
+.content {
+  height: 100vh;
+  padding: 20px;
+}
+
+.contacts {
+  text-align: center;
+
+  .phone {
+    color: hsl(0, 0%, 74%);
+  }
+}

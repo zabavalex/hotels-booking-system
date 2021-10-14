@@ -1,0 +1,61 @@
+@import 'variables';
+
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+@mixin margin-x($left, $right: $left) {
+  margin-right: $right;
+  margin-left: $left;
+}
+
+@mixin margin-y($top, $bottom: $top) {
+  margin-top: $top;
+  margin-bottom: $bottom;
+}
+
+@mixin padding-x($left, $right: $left) {
+  padding-right: $right;
+  padding-left: $left;
+}
+
+@mixin padding-y($top, $bottom: $top) {
+  padding-top: $top;
+  padding-bottom: $bottom;
+}
+
+@mixin children-margin-x($margin) {
+  > * + * {
+    margin-left: $margin;
+  }
+}
+
+@mixin children-margin-y($margin) {
+  > * + * {
+    margin-top: $margin;
+  }
+}
+
+@mixin ant-table-stretch($height: 160px) {
+  height: calc(100vh - #{$height});
+  overflow-x: auto;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+@mixin ant-table-col-margin() {
+  margin-right: 10px;
+}
+
+@mixin head-popup {
+  position: absolute;
+  z-index: 1;
+  width: 500px;
+  padding: 30px 30px 10px;
+  background-color: white;
+  border-bottom-right-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.25);
+  transition: transform 0.5s cubic-bezier(0.4, 0.6, 0.35, 1);
+}

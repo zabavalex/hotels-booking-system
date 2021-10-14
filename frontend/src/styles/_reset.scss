@@ -1,0 +1,24 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+h1,
+p,
+address {
+  margin-bottom: 0;
+}
+
+button {
+  font-weight: inherit;
+  font-size: inherit;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}

@@ -1,0 +1,103 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+.header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  padding: 15px;
+  text-align: center;
+  background-color: white;
+  border-bottom: 1px solid $grey-color;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  transition: box-shadow 0.3s ease-in;
+
+  .excelBtn {
+    margin-left: 15px;
+    padding: 5px;
+    color: hsl(0, 0%, 25%);
+    font-size: 23px;
+    line-height: 1;
+    background-color: white;
+    border: 1px dashed;
+    border-radius: $border-radius;
+    transition: all 0.3s ease-in;
+
+    &:hover {
+      color: hsl(0, 0%, 5%);
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+  .title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 18px;
+    transform: translate(-50%, -50%);
+  }
+
+  .filterBtn {
+    padding: 5px 20px;
+    color: hsl(0, 0%, 25%);
+    font-weight: 500;
+    font-size: 16px;
+    border: 1px dashed;
+    border-radius: $border-radius;
+    transition: all 0.3s ease-in;
+
+    &.active,
+    &:hover {
+      color: hsl(0, 0%, 5%);
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+
+    .btnTitle {
+      margin-left: 8px;
+    }
+  }
+
+  a {
+    display: none;
+  }
+}
+
+.pagination {
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  display: flex;
+  transform: translateY(-50%);
+
+  @include children-margin-x(8px);
+
+  > * {
+    min-width: 32px;
+    height: 32px;
+    color: $main-color;
+    border: 1px solid;
+  }
+
+  button:disabled {
+    &:disabled {
+      color: $grey-color;
+      cursor: not-allowed;
+    }
+  }
+
+  .page {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    cursor: default;
+  }
+}

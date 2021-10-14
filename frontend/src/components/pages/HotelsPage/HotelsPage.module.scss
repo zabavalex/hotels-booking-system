@@ -1,0 +1,43 @@
+@import '~@/styles/variables';
+@import '~@/styles/mixins';
+
+.wrapper {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+
+  :global(.ant-table-expanded-row-fixed) {
+    width: calc(100vw - 240px) !important;
+  }
+}
+
+.headerShadow {
+  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.15);
+}
+
+.table {
+  height: calc(100vh - 40px);
+  background-color: white;
+  transition: opacity 0.3s linear;
+
+  &.tableDisabled {
+    opacity: 0.4;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  :global(.ant-table-body) {
+    @include ant-table-stretch;
+  }
+}
+
+.filterWrapper {
+  left: 15px;
+  transform: translateY(-110%);
+
+  @include head-popup;
+
+  &.filterOpen {
+    transform: translateY(0%);
+  }
+}

@@ -1,0 +1,61 @@
+@import '~@/styles/mixins';
+
+.btnGroup {
+  display: flex;
+  max-width: 290px;
+
+  > div {
+    flex: 1;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+.statisticsWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: white;
+
+  .form {
+    justify-content: center;
+    padding: 10px 8px;
+    border-bottom: 1px solid #e3e3e3;
+
+    & div:last-child {
+      margin-right: 0;
+    }
+
+    :global(.ant-form-item-with-help) {
+      margin-bottom: 0 !important;
+    }
+
+    :global(.ant-form-item-explain) {
+      min-height: 0;
+    }
+
+    .dateRange {
+      width: 350px;
+    }
+  }
+
+  .statistics {
+    padding: 20px;
+
+    @include children-margin-y(10px);
+
+    .emptyStatistics {
+      @include padding-y(40px);
+    }
+  }
+
+  .charts {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0 20px 20px;
+  }
+}

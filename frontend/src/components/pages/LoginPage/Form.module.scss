@@ -1,0 +1,32 @@
+@import '~@/styles/mixins';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 480px;
+  padding-top: 40px;
+
+  @include padding-x(40px);
+}
+
+.btnGroup {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid hsl(0, 0%, 93%);
+
+  > * {
+    flex: 1;
+  }
+
+  @include children-margin-x(20px);
+
+  button {
+    width: 100%;
+    font-weight: 600;
+
+    @include padding-x(0);
+  }
+}

@@ -1,0 +1,20 @@
+.datePicker {
+  width: 100%;
+}
+
+.btnGroup {
+  display: flex;
+
+  > div {
+    flex: 1;
+  }
+
+  > div + div {
+    margin-left: 20px;
+  }
+
+  button {
+    width: 100%;
+    font-weight: 600;
+  }
+}

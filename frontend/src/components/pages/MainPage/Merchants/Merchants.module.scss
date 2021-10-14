@@ -1,0 +1,14 @@
+@import '~@/styles/mixins';
+
+.merchants {
+  height: calc(100vh - 40px);
+  background-color: white;
+
+  :global(.ant-table-body) {
+    @include ant-table-stretch(100px);
+  }
+
+  :global(.ant-table-selection) {
+    display: none;
+  }
+}

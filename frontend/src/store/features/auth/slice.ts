@@ -6,6 +6,8 @@ import { RegistrationResult, SessionResult, SimpleResult, UserResult } from '@/t
 import { ErrorObject, Fetch } from '@/types/index';
 import { getErrorFromResponse } from '@/store/utils';
 import { antNotification } from '@/utils/helpers';
+import {resetDetails, resetHotel} from "@/store/features/hotel/slice";
+import {resetBooking} from "@/store/features/booking/slice";
 
 type AuthState = {
   isAuthorised: boolean;
@@ -48,10 +50,12 @@ export const login = createAsyncThunk('auth/login', async (params: LoginParams, 
  */
 export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue, dispatch }) => {
   localStorage.removeItem("user");
-  // await Promise.all([
-  //   //очистить все
-  // ]);
-  return null;
+  await Promise.all([
+    dispatch(resetDetails()),
+    dispatch(resetBooking()),
+    dispatch(resetHotel()),
+  ]);
+  return;
 });
 
 type RegistrationParams = {

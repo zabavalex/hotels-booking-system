@@ -86,15 +86,15 @@ public class BookingControllers {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Booking booking){
-        try {
-            return bookingService.update(id, booking);
-        } catch (HttpConnectTimeoutException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.GATEWAY_TIMEOUT);
-        }
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Booking booking){
+//        try {
+//            return bookingService.update(id, booking);
+//        } catch (HttpConnectTimeoutException e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.GATEWAY_TIMEOUT);
+//        }
+//    }
 
     @PutMapping("/create")
     public ResponseEntity<?> create(@RequestBody BookingCreate bookingCreate){

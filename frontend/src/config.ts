@@ -35,12 +35,16 @@ export class Config {
       getHotels:  `${gateAwayServiceApiPrefix}/hotels/getallbyfilter`,
       getAllHotels:  `${gateAwayServiceApiPrefix}/hotels/getall`,
       getHotel: `${gateAwayServiceApiPrefix}/hotels/`,
+      createHotel: `${gateAwayServiceApiPrefix}/hotels/`,
 
       // Booking
       bookingCreate : `${gateAwayServiceApiPrefix}/booking/create`,
       getAllByClientId: `${gateAwayServiceApiPrefix}/booking/`,
       getBookingDetails: `${gateAwayServiceApiPrefix}/booking/`,
       bookingDelete: `${gateAwayServiceApiPrefix}/booking/`,
+
+      // Payment
+      pay : `${gateAwayServiceApiPrefix}/payment/create`,
 
       // Contact
       getContacts: `${gateAwayServiceApiPrefix}/getContacts`,

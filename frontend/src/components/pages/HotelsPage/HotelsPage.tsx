@@ -8,10 +8,10 @@ import EmptyProvider from '@/components/common/EmptyProvider/EmptyProvider';
 import FilterDialog from './FilterDialog/FilterDialog';
 import DetailsModal from './DetailsModal/DetailsModal';
 import {
-  getHotels,
-  saveFilter, saveDetails, resetDetails,
+    getHotels,
+    saveFilter, saveDetails, resetDetails, saveHotel,
 } from '@/store/features/hotel/slice';
-import { Hotel, HotelsFilter } from '@/types/hotel';
+import {Hotel, HotelCreate, HotelsFilter} from '@/types/hotel';
 import TableHeader from '@/components/common/TableHeader/TableHeader';
 import {
   isHotelLoadingSelector,
@@ -20,6 +20,7 @@ import {
 } from '@/store/features/hotel/selectors';
 import styles from './HotelsPage.module.scss';
 import { useClickOutside } from '@/utils/hooks';
+import HotelCreateDialog from "@/components/pages/HotelsPage/HotelCreateDialog/HotelCreateDialog";
 
 const tableScrollOptions = {
   x: 1,
@@ -29,9 +30,11 @@ const tableScrollOptions = {
 const HotelsPage = (): JSX.Element => {
   const dispatch = useDispatch();
   const filterRef = useRef(null);
+  const createHotelRef = useRef(null);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isCreateHotelOpen, setIsCreateHotelOpen] = useState(false);
 
   const isLoading = useSelector(isHotelLoadingSelector);
   const hotels = useSelector(hotelsSelector);
@@ -39,6 +42,12 @@ const HotelsPage = (): JSX.Element => {
 
   const toggleFilter = useCallback(() => {
     setIsFilterOpen((isOpen) => !isOpen);
+    setIsCreateHotelOpen(false);
+  }, []);
+
+  const toggleCreateHotel = useCallback(() => {
+    setIsCreateHotelOpen((isOpen) => !isOpen);
+    setIsFilterOpen(false);
   }, []);
 
   const closeFilter = useCallback(() => {
@@ -46,6 +55,12 @@ const HotelsPage = (): JSX.Element => {
       setIsFilterOpen(false);
     }
   }, [isFilterOpen, isLoading]);
+
+  const closeHotelCreate = useCallback(() => {
+    if (isCreateHotelOpen && !isLoading) {
+      setIsCreateHotelOpen(false);
+    }
+  }, [isCreateHotelOpen, isLoading]);
 
   const toggleDetails = useCallback(() => {
     setIsDetailsOpen((isOpen) => !isOpen);
@@ -58,6 +73,14 @@ const HotelsPage = (): JSX.Element => {
       toggleFilter();
     },
     [dispatch, toggleFilter],
+  );
+
+  const submitHotelCreate = useCallback(
+      async (data: HotelCreate) => {
+        await dispatch(saveHotel(data));
+        toggleCreateHotel();
+      },
+      [dispatch, toggleCreateHotel],
   );
 
 
@@ -75,15 +98,17 @@ const HotelsPage = (): JSX.Element => {
   );
 
   useClickOutside(filterRef, closeFilter, 'ant-picker');
+  useClickOutside(createHotelRef, closeFilter, 'ant-picker');
 
   return (
     <div className={styles.wrapper}>
       <TableHeader
-        className={cn(isFilterOpen && styles.headerShadow)}
-        hasData={hotels?.length > 0}
+        className={cn(isFilterOpen || isCreateHotelOpen && styles.headerShadow)}
         filterActive={isFilterOpen}
+        createHotelActive={isCreateHotelOpen}
         isLoading={isLoading}
-        onClick={toggleFilter}
+        onFilterClick={toggleFilter}
+        onCreateHotelClick={toggleCreateHotel}
       >
         Отели
       </TableHeader>
@@ -95,6 +120,14 @@ const HotelsPage = (): JSX.Element => {
           onFilterSubmit={submitFilter}
         />
       </section>
+      <section ref={createHotelRef} className={cn(styles.createHotelWrapper, { [styles.createHotelOpen]: isCreateHotelOpen })}>
+        <HotelCreateDialog
+            resetFields={isCreateHotelOpen}
+            isLoading={isLoading}
+            onHotelCreateCancel={closeHotelCreate}
+            onHotelCreateSubmit={submitHotelCreate}
+        />
+      </section>
       <EmptyProvider emptyMessage="Нет подходящих отелей" headerHeight={60}>
         <Table
           rowKey="uuid"
@@ -102,7 +135,7 @@ const HotelsPage = (): JSX.Element => {
           pagination={false}
           scroll={tableScrollOptions}
           loading={isLoading}
-          className={cn(styles.table, { [styles.tableDisabled]: isFilterOpen })}
+          className={cn(styles.table, { [styles.tableDisabled]: isFilterOpen || isCreateHotelOpen })}
           onRow={rowClickHandler}
         >
           <Table.Column

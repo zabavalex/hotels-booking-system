@@ -7,34 +7,30 @@ import styles from './PayDialog.module.scss';
 
 const labelCol = { span: 8 };
 
-const INIT_VALUES: BookingParams = {
-  refundAmount: '',
-  description: '',
-};
 
 interface Props {
   isLoading: boolean;
   isOpen: boolean;
-  onDeleteCancel: () => void;
-  onDeleteSubmit: () => void;
+  onPayCancel: () => void;
+  onPaySubmit: () => void;
 }
 
-const PayDialog = ({ isLoading, onDeleteSubmit, onDeleteCancel }: Props): JSX.Element => {
+const PayDialog = ({ isLoading, onPaySubmit, onPayCancel }: Props): JSX.Element => {
   const [form] = Form.useForm();
 
   const onFinish = useCallback(
     () => {
-      onDeleteSubmit();
+      onPaySubmit();
     },
-    [onDeleteSubmit],
+    [onPaySubmit],
   );
 
   return (
-    <Form form={form} labelCol={labelCol} onFinish={onFinish} initialValues={INIT_VALUES}>
+    <Form form={form} labelCol={labelCol} onFinish={onFinish}>
       <div className={styles.btnGroup}>
-        <p>Вы уверены что хотите отменить выбранную бронь?</p>
+        <p>Вы уверены что хотите оплатить выбранную бронь?</p>
         <Form.Item>
-          <Button type="default" htmlType="button" onClick={onDeleteCancel} disabled={isLoading}>
+          <Button type="default" htmlType="button" onClick={onPayCancel} disabled={isLoading}>
             Нет
           </Button>
         </Form.Item>

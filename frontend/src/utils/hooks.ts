@@ -16,7 +16,7 @@ export function useClickOutside(
       if (event.type === 'click' && isTouch.current) {
         return;
       }
-      if (exceptionClass && event.target.className.includes(exceptionClass)) {
+      if (exceptionClass &&  typeof event.target.className.includes !== 'undefined' && event.target.className.includes(exceptionClass)) {
       } else if (ref.current && !ref.current.contains(event.target)) {
         callback();
       }

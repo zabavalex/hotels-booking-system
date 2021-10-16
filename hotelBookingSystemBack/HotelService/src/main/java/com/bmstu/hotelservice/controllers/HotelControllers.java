@@ -92,4 +92,14 @@ public class HotelControllers {
                 ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @PutMapping
+    public ResponseEntity<?> create(@RequestBody Hotel hotel){
+        if(hotelService.getByNameAndCityAndCountry(hotel.getName(), hotel.getCity(), hotel.getCountry()) == null){
+            hotelService.create(hotel);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new ErrorResponse("Ошибка создания отеля", "Отель с таким названием уже создан в вашем городе"), HttpStatus.BAD_REQUEST);
+
+    }
 }

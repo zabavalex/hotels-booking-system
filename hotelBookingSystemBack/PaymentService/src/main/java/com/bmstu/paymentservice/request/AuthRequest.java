@@ -1,4 +1,4 @@
-package com.bmstu.bookingservice.response;
+package com.bmstu.paymentservice.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

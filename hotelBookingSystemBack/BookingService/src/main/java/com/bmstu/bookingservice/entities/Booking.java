@@ -20,6 +20,7 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
+    private boolean isPaid;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Calendar dateFrom;
@@ -31,4 +32,12 @@ public class Booking {
     private Long hotelId;
     @Column(nullable = false)
     private Long clientId;
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
 }

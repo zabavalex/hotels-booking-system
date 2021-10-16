@@ -9,5 +9,13 @@ hotelService:
   update: "/hotels/{id}"
   password: "123"
   login: "456"
+payService:
+  host: "localhost:8097"
+  updateToken: "/payment/login"
+  create: "/payment/create"
+  check: "/payment/check"
+  password: "123"
+  login: "456"
+
 
 

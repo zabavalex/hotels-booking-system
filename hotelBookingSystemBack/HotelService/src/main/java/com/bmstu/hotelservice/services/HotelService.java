@@ -59,8 +59,8 @@ public class HotelService {
         return hotelRepository.findAllByOwnerLogin(ownerLogin);
     }
 
-    public Hotel getHotelByNameAndOwnerLogin(String name, String ownerLogin){
-        return hotelRepository.findByOwnerLoginAndName(ownerLogin, name);
+    public Hotel getByNameAndCityAndCountry(String name, String city, String country){
+        return hotelRepository.findByNameAndCityAndCountry(name, city, country);
     }
 
     public List<Hotel> getAllHotel(){

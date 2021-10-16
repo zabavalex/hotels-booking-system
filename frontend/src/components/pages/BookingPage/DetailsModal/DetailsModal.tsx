@@ -11,9 +11,14 @@ import { antNotification } from '@/utils/helpers';
 import styles from './DetailsModal.module.scss';
 import { useClickOutside } from '@/utils/hooks';
 import {BookingDetails} from "@/types/booking";
-import {deleteBooking} from "@/store/features/booking/slice";
-import {isBookingDetailsLoadingSelector, isDeleteLoadingSelector} from "@/store/features/booking/selectors";
+import {deleteBooking, payBooking} from "@/store/features/booking/slice";
+import {
+  isBookingDetailsLoadingSelector,
+  isDeleteLoadingSelector,
+  isPayLoadingSelector
+} from "@/store/features/booking/selectors";
 import DeleteDialog from "@/components/pages/BookingPage/DeleteDialog/DeleteDialog";
+import PayDialog from "@/components/pages/BookingPage/PayDialog/PayDialog";
 
 
 const COL_0 = [
@@ -41,10 +46,13 @@ interface Props {
 
 const DetailsModal = ({ isVisible, details, onModalClose }: Props): JSX.Element => {
   const dispatch = useDispatch();
-  const refundRef = useRef(null);
+  const deleteRef = useRef(null);
+  const payRef = useRef(null);
 
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isPayOpen, setIsPayOpen] = useState(false);
   const isDeleteLoading = useSelector(isDeleteLoadingSelector);
+  const isPayLoading = useSelector(isPayLoadingSelector);
   const detailsAreLoading = useSelector(isBookingDetailsLoadingSelector);
 
   const handleDelete = useCallback(
@@ -59,6 +67,27 @@ const DetailsModal = ({ isVisible, details, onModalClose }: Props): JSX.Element 
     [dispatch],
   );
 
+  const handlePay = useCallback(
+      async () => {
+        const { payload } = await dispatch(payBooking());
+
+        if (payload && payload.errMsg) {
+          antNotification(payload.errTitle, payload.errMsg);
+        }
+        setIsPayOpen(false);
+      },
+      [dispatch],
+  );
+
+  const togglePay = useCallback(() => {
+    setIsPayOpen((isOpen) => !isOpen);
+  }, []);
+
+  const closePay = useCallback(() => {
+    if (isPayOpen && !isPayLoading) {
+      setIsPayOpen(false);
+    }
+  }, [isPayOpen, isPayLoading]);
 
   const toggleDelete = useCallback(() => {
     setIsDeleteOpen((isOpen) => !isOpen);
@@ -71,7 +100,9 @@ const DetailsModal = ({ isVisible, details, onModalClose }: Props): JSX.Element 
   }, [isDeleteOpen, isDeleteLoading]);
 
 
-  useClickOutside(refundRef, closeDelete);
+
+  useClickOutside(payRef, closePay);
+  useClickOutside(deleteRef, closeDelete);
 
   return (
     <Modal
@@ -88,16 +119,25 @@ const DetailsModal = ({ isVisible, details, onModalClose }: Props): JSX.Element 
             <WalletOutlined />
             <span className={styles.btnTitle}>Удалить</span>
           </button>
+          <button
+              className={cn(styles.headerBtn, isPayOpen && styles.active)}
+              type="button"
+              disabled={isPayLoading}
+              onClick={togglePay}
+          >
+            <WalletOutlined />
+            <span className={styles.btnTitle}>Оплатить</span>
+          </button>
         </div>
       )}
       closeIcon={<CloseOutlined className={styles.close} />}
-      className={cn(isDeleteOpen && styles.headerShadow)}
+      className={cn(isDeleteOpen || isPayOpen && styles.headerShadow)}
       width="850px"
       visible={isVisible}
       footer={null}
       onCancel={onModalClose}
     >
-      <section ref={refundRef} className={cn(styles.refundWrapper, isDeleteOpen && styles.refundOpen)}>
+      <section ref={deleteRef} className={cn(styles.refundWrapper, isDeleteOpen && styles.refundOpen)}>
         <DeleteDialog
           isLoading={isDeleteLoading}
           isOpen={isDeleteOpen}
@@ -105,7 +145,15 @@ const DetailsModal = ({ isVisible, details, onModalClose }: Props): JSX.Element 
           onDeleteCancel={closeDelete}
         />
       </section>
-      <section className={cn(styles.cards, isDeleteOpen && styles.cardsDisabled)}>
+      <section ref={payRef} className={cn(styles.refundWrapper, isPayOpen && styles.refundOpen)}>
+        <PayDialog
+            isLoading={isPayLoading}
+            isOpen={isDeleteOpen}
+            onPaySubmit={handlePay}
+            onPayCancel={closePay}
+        />
+      </section>
+      <section className={cn(styles.cards, isDeleteOpen || isPayOpen && styles.cardsDisabled)}>
         <Card title="Бронирование" className={styles.marginTop}>
           {COL_0.map((row) => (
               <DetailsRow

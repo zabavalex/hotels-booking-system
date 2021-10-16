@@ -1,4 +1,4 @@
-package com.bmstu.paymentservice.server;
+package com.bmstu.paymentservice.service;
 
 import com.bmstu.paymentservice.entity.Pay;
 import com.bmstu.paymentservice.repositories.PayRepository;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PayServer {
+public class PayService {
     @Autowired
     private PayRepository payRepository;
 
@@ -29,6 +29,18 @@ public class PayServer {
     }
 
     public Pay getByBookingId(Long bookingId){
-        return payRepository.getById(bookingId);
+        return payRepository.findPayByBookingId(bookingId);
+    }
+
+    public Pay getByUserIdAndBookingId(Long userId, Long bookingId){
+        return payRepository.findPayByUserIdAndAndBookingId(userId, bookingId);
+    }
+
+    public Boolean create(Pay pay){
+        if(getByBookingId(pay.getBookingId()) == null){
+            payRepository.save(pay);
+            return true;
+        }
+        return false;
     }
 }

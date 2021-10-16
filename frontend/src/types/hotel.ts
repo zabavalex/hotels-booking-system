@@ -18,14 +18,24 @@ export interface Hotel {
 }
 
 export interface HotelsFilter {
-  authorizationNo?: string;
   country: string;
   city: string;
-  // priceFrom: string;
-  // priceTo: string;
   dateFrom: string;
   dateTo: string;
 }
+
+export interface HotelCreate {
+  name : string;
+  country : string;
+  city : string;
+  address : string;
+  description : string;
+  numberAvailableRooms : number;
+  numberRooms : number;
+  ownerLogin : string;
+  price : number;
+}
+
 
 export interface BookingParams {
   refundAmount: string;

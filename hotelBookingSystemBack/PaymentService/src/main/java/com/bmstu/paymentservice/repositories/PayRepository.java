@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PayRepository extends JpaRepository<Pay, Long> {
     Pay findPayByBookingId(Long bookingId);
+    Pay findPayByUserIdAndAndBookingId(Long userId, Long bookingId);
 }

@@ -99,6 +99,12 @@ const BookingsPage = (): JSX.Element => {
             title="Дата окончания"
             dataIndex="dateTo"
           />
+          <Table.Column
+              width={250}
+              sorter={sorterFn('paid')}
+              title="Заказ оплачен"
+              dataIndex="paid"
+          />
           </Table>
       </EmptyProvider>
       <DetailsModal details={details} isVisible={isDetailsOpen} onModalClose={toggleDetails} />

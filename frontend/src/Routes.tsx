@@ -59,7 +59,7 @@ const Routes = (): JSX.Element => {
         <PermissionRoute
           exact
           path={routes.loginPage}
-          redirect={routes.mainPage}
+          redirect={routes.hotelsPage}
           component={LoginPage}
           hasPermission={!isAuthorized}
         />

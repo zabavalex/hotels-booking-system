@@ -16,16 +16,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class BookingService {
+    private final PayService payService;
     private final BookingRepository bookingRepository;
     private final HotelService hotelService;
     private final Gson gson;
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-    public BookingService(BookingRepository hotelRepository, HotelService hotelService, Gson gson) {
+    public BookingService(PayService payService, BookingRepository hotelRepository, HotelService hotelService, Gson gson) {
+        this.payService = payService;
         this.bookingRepository = hotelRepository;
         this.hotelService = hotelService;
         this.gson = gson;
@@ -46,6 +49,16 @@ public class BookingService {
             ResponseEntity<?> response = hotelService.getById(booking.getHotelId());
             if(response.getStatusCode() == HttpStatus.OK) {
                 Hotel hotel = gson.fromJson(String.valueOf(response.getBody()), Hotel.class);
+                boolean isPaid = false;
+                try {
+                    ResponseEntity<?> responseFromPay = payService.check(booking.getClientId());
+                    if(Objects.equals(responseFromPay.getBody(), "true")){
+                        isPaid = true;
+                    }
+                } catch (HttpConnectTimeoutException e) {
+                    e.printStackTrace();
+                }
+                booking.setPaid(isPaid);
                 return new BookingDetails(hotel, booking);
             }
         }
@@ -107,6 +120,19 @@ public class BookingService {
     }
 
     public List<Booking> getAllBookingByClientId(Long clientId){
-        return bookingRepository.findAllByClientId(clientId);
+        List<Booking> bookings = bookingRepository.findAllByClientId(clientId);
+        bookings.forEach(booking -> {
+            boolean isPaid = false;
+            try {
+                ResponseEntity<?> response = payService.check(booking.getId());
+                if(Objects.equals(response.getBody(), "true")){
+                    isPaid = true;
+                }
+            } catch (HttpConnectTimeoutException e) {
+                e.printStackTrace();
+            }
+            booking.setPaid(isPaid);
+        });
+        return bookings;
     }
 }

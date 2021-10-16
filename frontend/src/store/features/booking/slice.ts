@@ -49,7 +49,6 @@ export const getBookingsList = createAsyncThunk(
           'Authorization': 'Bearer_' + JSON.parse(localStorage.getItem("user")).token
         }
       });
-      console.log(JSON.stringify(data));
       return data;
     } catch (error) {
       return rejectWithValue(getErrorFromResponse(error));
@@ -74,7 +73,6 @@ export const getBookingsDetails = createAsyncThunk(
                 'Authorization': 'Bearer_' + JSON.parse(localStorage.getItem("user")).token
               }
             });
-        console.log(JSON.stringify(data));
         return data;
       } catch (error) {
         return rejectWithValue(getErrorFromResponse(error));
@@ -101,6 +99,36 @@ export const deleteBooking = createAsyncThunk(
         dispatch(getHotels());
         dispatch(getBookingsList())
         dispatch(resetDetails())
+        return;
+      } catch (error) {
+        return rejectWithValue(getErrorFromResponse(error));
+      }
+    },
+);
+
+/**
+ * Sends poy booking request
+ *
+ */
+export const payBooking = createAsyncThunk(
+    'payment/payboking',
+    async (_, { rejectWithValue, getState, dispatch }) => {
+      try {
+        const details = (getState() as RootState).booking.bookingDetails;
+        const user = localStorage.getItem("user") != null ? JSON.parse(localStorage.getItem("user")) : null;
+        const { id } = user;
+        await axios.put<void>(config.apiMethods.pay,
+            {
+                userId: id,
+                bookingId: details.id,
+                price: details.price
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer_' + JSON.parse(localStorage.getItem("user")).token
+              }
+            });
+        dispatch(getBookingsList())
         return;
       } catch (error) {
         return rejectWithValue(getErrorFromResponse(error));
@@ -150,7 +178,6 @@ const slice = createSlice({
     });
     builder.addCase(getBookingsDetails.fulfilled, (state, action) => {
       const { ...rest } = action.payload;
-      console.log(JSON.stringify(state.bookingDetails));
       state.bookingDetailsFetchingState = Fetch.Fulfilled;
       state.bookingDetails = {
         ...rest

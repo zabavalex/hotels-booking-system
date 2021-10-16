@@ -88,4 +88,16 @@ public class HotelControllers {
             return new ResponseEntity<>(HttpStatus.GATEWAY_TIMEOUT);
         }
     }
+
+    @PutMapping
+    public ResponseEntity<?> create(@RequestBody Hotel hotel){
+        try {
+            ResponseEntity<?> response = hotelService.create(hotel);
+            return new ResponseEntity<>(response.getBody() ,response.getStatusCode());
+        } catch (HttpConnectTimeoutException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.GATEWAY_TIMEOUT);
+        }
+
+    }
 }

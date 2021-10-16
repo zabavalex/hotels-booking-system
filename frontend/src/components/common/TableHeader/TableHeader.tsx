@@ -6,48 +6,59 @@ import { PaginationData } from '@/types';
 import styles from './TableHeader.module.scss';
 
 interface Props {
-  className: string;
-  filterActive: boolean;
-  hasData: boolean;
-  pagination?: PaginationData;
-  isLoading: boolean;
-  onClick: () => void;
-  onPage?: (value: number) => void;
+    className: string;
+    filterActive: boolean;
+    createHotelActive: boolean;
+    pagination?: PaginationData;
+    isLoading: boolean;
+    onFilterClick: () => void;
+    onCreateHotelClick: () => void;
+    onPage?: (value: number) => void;
 }
 
 const TableHeader = ({
-  className,
-  children,
-  filterActive,
-  hasData,
-  pagination,
-  isLoading,
-  onClick,
-  onPage,
+    className,
+    children,
+    filterActive,
+    createHotelActive,
+    pagination,
+    isLoading,
+    onFilterClick,
+    onCreateHotelClick,
+    onPage,
 }: PropsWithChildren<Props>): JSX.Element => {
   const linkRef = useRef(null);
 
   const handleNextPage = useCallback(
     (type: 'up' | 'down') => () => {
       if (filterActive) {
-        onClick();
+        onFilterClick();
       }
       onPage(type === 'up' ? 1 : -1);
     },
-    [filterActive, onClick, onPage],
+    [filterActive, onFilterClick, onPage],
   );
 
   return (
     <header className={cn(styles.header, className)}>
-      <button
-        className={cn(styles.filterBtn, filterActive && styles.active)}
-        type="button"
-        disabled={isLoading}
-        onClick={onClick}
-      >
-        <FilterOutlined />
-        <span className={styles.btnTitle}>Фильтр</span>
-      </button>
+        <button
+            className={cn(styles.filterBtn, filterActive || createHotelActive && styles.active)}
+            type="button"
+            disabled={isLoading}
+            onClick={onFilterClick}
+        >
+            <FilterOutlined />
+            <span className={styles.btnTitle}>Фильтр</span>
+        </button>
+        <button
+            className={cn(styles.filterBtn, filterActive || createHotelActive && styles.active)}
+            type="button"
+            disabled={isLoading}
+            onClick={onCreateHotelClick}
+        >
+            <FilterOutlined />
+            <span className={styles.btnTitle}>Создать отель</span>
+        </button>
       <a ref={linkRef} aria-hidden="true" href="#fake">
         &nbsp;
       </a>

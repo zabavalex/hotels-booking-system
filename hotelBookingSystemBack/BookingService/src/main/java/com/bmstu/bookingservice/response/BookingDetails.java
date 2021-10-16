@@ -24,6 +24,7 @@ public class BookingDetails {
     private String description;
     private String ownerLogin;
     private String price;
+    private boolean isPaid;
 
     public BookingDetails(Hotel hotel, Booking booking) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -39,5 +40,6 @@ public class BookingDetails {
         description = hotel.getDescription();
         ownerLogin = hotel.getOwnerLogin();
         price = String.valueOf(hotel.getPrice());
+        isPaid = booking.isPaid();
     }
 }

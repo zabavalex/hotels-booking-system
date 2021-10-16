@@ -10,6 +10,7 @@ export interface Booking {
   dateTo: string;
   hotelId: string;
   clientId: string;
+  isPaid: boolean;
 }
 
 export interface BookingDetails {
@@ -26,6 +27,7 @@ export interface BookingDetails {
   description: string;
   ownerLogin: string;
   price: number;
+  isPaid: boolean;
 }
 
 

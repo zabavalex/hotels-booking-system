@@ -20,19 +20,16 @@ const priceRangePH: [string, string] = ['Введите начальную це�
 const labelCol = { span: 8 };
 
 const INIT_VALUES = {
-  batchNo: '',
-  transactionNo: '',
-  terminalNo: '',
-  merchantNo: '',
-  dateRange: [new Date(), tomorrowDate()],
-  rrn: '',
+    country: '',
+    city: '',
+    dateRange: [new Date(), tomorrowDate()],
 };
 
 interface Props {
-  resetFields: boolean;
-  isLoading: boolean;
-  onFilterSubmit: (data: HotelsFilter) => void;
-  onFilterCancel: () => void;
+    resetFields: boolean;
+    isLoading: boolean;
+    onFilterSubmit: (data: HotelsFilter) => void;
+    onFilterCancel: () => void;
 }
 
 const FilterDialog = ({ resetFields, onFilterSubmit, onFilterCancel, isLoading }: Props): JSX.Element => {
@@ -67,7 +64,7 @@ const FilterDialog = ({ resetFields, onFilterSubmit, onFilterCancel, isLoading }
 
   return (
     <Form form={form} labelCol={labelCol} onFinish={onFinish} initialValues={INIT_VALUES}>
-        <Form.Item label="Date Range" name="dateRange" rules={validationConfig.dateTo}>
+        <Form.Item label="Заезд/Отъезд" name="dateRange" rules={validationConfig.dateTo}>
             <DateRangePicker
                 className={styles.datePicker}
                 placeholder={datesRangePH}
@@ -88,12 +85,12 @@ const FilterDialog = ({ resetFields, onFilterSubmit, onFilterCancel, isLoading }
       <div className={styles.btnGroup}>
         <Form.Item>
           <Button type="default" htmlType="button" onClick={onFilterCancel} disabled={isLoading}>
-            Cancel
+            Отмена
           </Button>
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={isLoading}>
-            Submit
+            Поиск
           </Button>
         </Form.Item>
       </div>

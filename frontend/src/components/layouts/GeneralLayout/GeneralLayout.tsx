@@ -44,9 +44,9 @@ const GeneralLayout = ({ children }: PropsWithChildren<{}>): JSX.Element => {
           </div>
 
           <Menu mode="inline" theme="light" selectedKeys={pathname}>
-            <Menu.Item key={config.routes.mainPage} icon={<HomeOutlined />}>
-              <Link to={config.routes.mainPage}>Main page</Link>
-            </Menu.Item>
+            {/*<Menu.Item key={config.routes.mainPage} icon={<HomeOutlined />}>*/}
+            {/*  <Link to={config.routes.mainPage}>Main page</Link>*/}
+            {/*</Menu.Item>*/}
             <Menu.Item key={config.routes.hotelsPage} icon={<BankOutlined />}>
               <Link to={config.routes.hotelsPage}>Отели</Link>
             </Menu.Item>

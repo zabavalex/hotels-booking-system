@@ -1,29 +1,2 @@
-bookingService:
-  host: "localhost:8092"
-  updateToken: "/booking/login"
-  getAllByFilter: "/booking/{hotelId}/getallbyfilter"
-  getAllByHotelId: "/booking/{hotelId}/getallbyhotelid"
-  getAllByClientId: "/booking/{clientId}/getall"
-  getById: "/booking/{id}"
-  getDetails: "/booking/{id}/getdetails"
-  delete: "/booking/{id}"
-  update: "/booking/{id}"
-  create: "/booking/create"
-  password: "123"
-  login: "456"
-sessionService:
-  host: "localhost:8090"
-  verify: "/verify"
-hotelService:
-  host: "localhost:8091"
-  updateToken: "/hotels/login"
-  getAll: "/hotels/getall"
-  getAllByFilter: "/hotels/getallbyfilter"
-  getAllByOwnerLogin: "/hotels/{ownerLogin}/getall"
-  getById: "/hotels/{id}"
-  delete: "/hotels/{id}"
-  update: "/hotels/{id}"
-  password: "123"
-  login: "456"
 
 

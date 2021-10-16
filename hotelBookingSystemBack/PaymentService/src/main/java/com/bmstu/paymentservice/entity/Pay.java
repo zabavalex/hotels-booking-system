@@ -1,5 +1,6 @@
 package com.bmstu.paymentservice.entity;
 
+import com.bmstu.paymentservice.request.PayCreateRequest;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -22,4 +23,10 @@ public class Pay {
     private Long userId;
     private Long bookingId;
     private String price;
+
+    public Pay(PayCreateRequest pay) {
+        userId = pay.getUserId();
+        bookingId = pay.getBookingId();
+        price = pay.getPrice();
+    }
 }
